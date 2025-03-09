@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_open_chatbot" model="ir.actions.act_url">
+        <field name="name">Open Chatbot</field>
+        <field name="url">/chatbot/helpdesk-bot-3/test</field>
+        <field name="target">self</field>
+    </record>
+<menuitem id="chatbot_menu_root" name="24x7 Chatbot" sequence="100"/>
+<menuitem id="chatbot_main_menu" name="Chatbot App" parent="chatbot_menu_root" action="chatbot_intregate.action_open_chatbot" sequence="20"/>
+<menuitem id="chatbot_menu_root" web_icon="chatbot_intregate,static/description/icon.png" name="24x7 Chatbot" sequence="10"/>
+</odoo>

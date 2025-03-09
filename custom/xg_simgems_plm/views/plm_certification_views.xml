@@ -1,0 +1,50 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+
+    <record id="view_plm_certification_list" model="ir.ui.view">
+        <field name="name">plm.certification.list</field>
+        <field name="model">plm.certification</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="certification_number"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_plm_certification_form" model="ir.ui.view">
+        <field name="name">plm.certification.form</field>
+        <field name="model">plm.certification</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="certification_number"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_plm_certification" model="ir.actions.act_window">
+        <field name="name">PLM Certifications</field>
+        <field name="res_model">plm.certification</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first PLM Certification.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item under PLM Custom Configurations -->
+    <menuitem id="menu_plm_certification_config" 
+              name="Certifications" 
+              parent="xg_simgems_plm.menu_plm_custom_configuration"
+              action="action_plm_certification" 
+              sequence="3"/>
+
+</odoo>

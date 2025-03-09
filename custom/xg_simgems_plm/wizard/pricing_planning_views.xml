@@ -1,0 +1,70 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+    <record id="view_pricing_planning_wizard_form" model="ir.ui.view">
+        <field name="name">pricing.planning.form</field>
+        <field name="model">pricing.planning</field>
+        <field name="arch" type="xml">
+            <form string="Pricing Planning Wizard">
+                <sheet>
+                    <group colspan='3'>
+                        <group>
+                            <field name="plan"/>
+                            <field name="combination"/>
+                        </group>
+                        <group>
+                            <field name="pricing_id" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                    <separator/>
+                    <group colspan='3'>
+                        <group colspan='3'>
+                            <field class="o_time_off_icon_types d-flex flex-wrap" name="icon_id" widget="custom_radio_image" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+                    <separator/>
+
+                    <group colspan="3" class="o_row">
+                            <group >
+                                <field name="shape_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'shape')]" invisible="0"/>
+                                <field name="size_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'size')]"/>
+                                <field name="cut_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'cut')]"/>
+                                <field name="florescence_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'florescence')]"/>
+                                <field name="heart_arrow_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'ha')]"/>
+                            </group>
+                            <group>
+                                <field name="colour_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'color')]"/>
+                                <field name="polish_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'polish')]"/>
+                                <field name="shade_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'shade')]"/>
+                                <field name="diamond_type_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'dt')]"/>
+                            </group>
+                            <group>
+                                <field name="clarity_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'clarity')]"/>
+                                <field name="symmetry_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'sym')]"/>
+                                <field name="luster_id" class="o_field_widget" domain="[('attribute_id.y_attribute_type', '=', 'ls')]"/>
+                            </group>
+                        
+                    </group>
+                    <br/>
+                    <group colspan='3'>
+                        <group>
+                            <field name="remarks"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Add" type="object" name="confirm_action" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_pricing_planning_wizard" model="ir.actions.act_window">
+        <field name="name">Pricing Planning Wizard</field>
+        <field name="res_model">pricing.planning</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

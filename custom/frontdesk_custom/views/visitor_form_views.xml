@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="frontdesk_visitor_view_form_inherit" model="ir.ui.view">
+        <field name="name">frontdesk.visitor.view.form.inherit</field>
+        <field name="model">frontdesk.visitor</field>
+        <field name="inherit_id" ref="frontdesk.frontdesk_visitor_view_form"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="kam_id"/>
+            </field>
+        </field>
+    </record>
+
+
+
+    <record id="view_frontdesk_kma_list" model="ir.ui.view">
+        <field name="name">frontdesk.kma.list</field>
+        <field name="model">frontdesk.kma</field>
+        <field name="arch" type="xml">
+            <list string="KMA list">
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+    <!-- KMA Form View -->
+    <record id="view_frontdesk_kma_form" model="ir.ui.view">
+        <field name="name">frontdesk.kma.form</field>
+        <field name="model">frontdesk.kma</field>
+        <field name="arch" type="xml">
+            <form string="KMA Form">
+                <group>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="email"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for KMA Form -->
+   <record id="action_frontdesk_kma_form" model="ir.actions.act_window">
+    <field name="name">KAM</field>
+    <field name="res_model">frontdesk.kma</field>
+    <field name="view_mode">list,form</field>
+    <field name="target">main</field>  <!-- This ensures full screen -->
+</record>
+
+
+    <menuitem
+        id="frontdesk_menu_kma"
+        name="KAM"
+        parent="frontdesk.frontdesk_menu_config"
+        action="frontdesk_custom.action_frontdesk_kma_form"
+        sequence="3"/>
+
+    <!-- Model Definition -->
+<!--    <record id="model_frontdesk_kma" model="ir.model">-->
+<!--        <field name="name">frontdesk.kma</field>-->
+<!--        <field name="model">frontdesk.kma</field>-->
+<!--        <field name="state">manual</field>-->
+<!--    </record>-->
+</odoo>
+
+

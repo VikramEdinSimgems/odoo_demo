@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_video_dashboard,access_video_dashboard,model_video_dashboard,,1,1,1,1
+
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="frontdesk.VisitorForm" t-inherit-mode="extension">
+
+        <xpath expr="//label[@for='name']" position="replace">
+     <label for="name" class="form-label">Name <span class="small text-danger">*</span></label>
+</xpath>
+        <xpath expr="//label[@for='email']" position="replace">
+     <label for="email" class="form-label">Email <span class="small text-danger">*</span></label>
+</xpath>
+        <xpath expr="//label[@for='phone']" position="replace">
+     <label for="phone" class="form-label">Mobile <span class="small text-danger">*</span></label>
+</xpath>
+         <xpath expr="//input[@id='phone']" position="attributes">
+            <attribute name="placeholder">e.g. (123) 456-7890</attribute>
+        </xpath>
+        <xpath expr="//label[@for='company']" position="replace">
+     <label for="company" class="form-label">Company Name <span class="small text-danger"></span></label>
+</xpath>
+        <!-- Change "Your Company" label to "Company" -->
+        <xpath expr="//label[@for='company']" position="attributes">
+            <attribute name="t-esc">Company</attribute>
+        </xpath>
+      <xpath expr="//div/input[@id='company']" position="after">
+        <t t-if="user.company_id.name == 'Sim Gems DMCC'">
+        <!-- Employee Dropdown (only for Sim Gems DMCC) -->
+            <div class="mt-3">
+                <label for="Employees_id" class="form-label">Employee Name</label>
+                <span class="small text-danger"> *</span>
+                <select class="form-control dropdown-icon" id="Employees_id" required="0">
+                    <option value="">Select Employee</option>
+                    <t t-if="state.employee_list">
+                        <t t-foreach="state.employee_list" t-as="employee" t-key="employee.id">
+                            <option t-att-value="employee.id" t-esc="employee.name"/>
+                        </t>
+                    </t>
+                </select>
+             </div>
+        </t>
+
+        <t t-else="">
+        <!-- KAM Dropdown (for other companies) -->
+            <div class="mt-3">
+                <label for="kam_id" class="form-label">Key Account Manager</label>
+                <span class="small text-danger"> *</span>
+                <select class="form-control dropdown-icon" id="kam_id" required="0">
+                    <option value="">Select Key Account Manager</option>
+                    <t t-if="state.kam_list">
+                        <t t-foreach="state.kam_list" t-as="kam" t-key="kam.id">
+                            <option t-att-value="kam.id" t-esc="kam.name"/>
+                        </t>
+                    </t>
+                </select>
+            </div>
+        </t>
+    </xpath>
+
+         <xpath expr="//button[@type='submit']" position="attributes">
+            <attribute name="class">btn btn-primary mt-4 w-100 custom-margin</attribute>
+        </xpath>
+    </t>
+</templates>
+
+
+
+

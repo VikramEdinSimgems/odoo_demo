@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_video_dashboard" model="ir.actions.act_window">
+        <field name="name">Video Dashboard</field>
+        <field name="res_model">video.dashboard</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create and manage video records.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_video_dashboard_root" name="Video Dashboard Management" sequence="10"/>
+
+    <menuitem id="menu_video_dashboard_main" name="video_dashboard" parent="menu_video_dashboard_root" sequence="20"/>
+
+    <menuitem id="menu_video_dashboard" name="Manage Video" parent="menu_video_dashboard_main" action="action_video_dashboard" sequence="30"/>
+    <menuitem id="menu_video_dashboard_root" web_icon="video_dashboard,static/description/icon.png" name="Video Dashboard Management" sequence="10"/>
+
+</odoo>

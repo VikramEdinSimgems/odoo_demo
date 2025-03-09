@@ -1,0 +1,120 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+
+
+    <!-- list view for rapprice.threshold -->
+    <record id="view_rapprice_threshold_list" model="ir.ui.view">
+        <field name="name">rapprice.threshold.list</field>
+        <field name="model">rapprice.threshold</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="date" />
+                <field name="responsible_user_id" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for rapprice.threshold -->
+    <record id="view_rapprice_threshold_form" model="ir.ui.view">
+        <field name="name">rapprice.threshold.form</field>
+        <field name="model">rapprice.threshold</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_inprogress" type="object" string="In Progress" invisible="state not in ('draft')" class="btn-primary"/>
+                     <button name="action_approve" type="object" string="Approve" invisible="state not in ('inprogress')" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Cancel"  invisible="state not in ('draft','cancel')" class="btn-danger"/>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,inprogress,approved" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="right_ind_disc">
+                            <field name="date" readonly="state not in ('draft')"/>
+                            <field name="approved_user_id" readonly="state not in ('draft','inprogress')"/>
+                            <field name="approved_date" />
+
+                        </group>
+                        <group name="left_ind_disc">
+                            <field name="responsible_user_id" readonly="state not in ('draft')"/>
+                            <field name="tags" widget="many2many_tags" readonly="state not in ('draft')"/>
+                        </group>
+                        <group>
+                            <field name="notes" />
+                        </group>
+                        
+                    </group>
+                    <notebook>
+                        <page string="Line Items">
+                            <field name="line_items" readonly="state not in ('draft')">
+                                <list editable="bottom">
+                                    <field name="shape_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'shape')]"/>
+                                    <field name="clarity_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'clarity')]"/>
+                                    <field name="colour_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'color')]"/>
+                                    <field name="from_size_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'size')]"/>
+                                    <field name="to_size_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'size')]"/>
+                                    <field name="threshold_rap_price" width="200%"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban view for rapprice.threshold -->
+    <record id="view_rapprice_threshold_kanban" model="ir.ui.view">
+        <field name="name">rapprice.threshold.kanban</field>
+        <field name="model">rapprice.threshold</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name" />
+                <field name="date" />
+                <field name="responsible_user_id" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                            <div>
+                                <field name="date" />
+                            </div>
+                            <div>
+                                <field name="responsible_user_id" />
+                            </div>
+                            <div>
+                                <field name="state" />
+                            </div>
+                        </div>
+                    </t>
+                </templates>    
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_rapprice_threshold" model="ir.actions.act_window">
+        <field name="name">Rapprice Threshold</field>
+        <field name="res_model">rapprice.threshold</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <menuitem id="menu_plm_rap_price"
+        name="Rap Prices"
+        parent="xg_simgems_plm.menu_plm_custom_configuration"
+        sequence="2" />
+    
+    <menuitem id="menu_rapprice_threshold" name="Rapprice Threshold" parent="menu_plm_rap_price"
+        action="action_rapprice_threshold" />
+</odoo>

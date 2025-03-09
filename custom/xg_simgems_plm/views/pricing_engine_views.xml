@@ -1,0 +1,954 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+
+
+    <!-- list view for pricing.engine -->
+    <record id="view_pricing_engine_list" model="ir.ui.view">
+        <field name="name">pricing.engine.list</field>
+        <field name="model">pricing.engine</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="date" />
+                <field name="user_id" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for pricing.engine -->
+    <record id="view_pricing_engine_form" model="ir.ui.view">
+        <field name="name">pricing.engine.form</field>
+        <field name="model">pricing.engine</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                     <button name="action_request" type="object" string="Request" invisible="state not in ('draft')" class="btn-primary"/>
+                     <button name="action_approve" type="object" string="Approve" invisible="state not in ('requested')" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Cancel"  invisible="state not in ('draft','requested','approved')" class="btn-danger"/>
+                    <button name="action_reject" type="object" string="Reject"  invisible="state not in ('requested')" class="btn-danger"/>
+                     <button name="action_done" type="object" string="Done"  invisible="state not in ('approved')" class="btn-success"/>
+                     <button name="action_reset_to_draft" type="object" string="Reset To draft"  invisible="state not in ('rejected','cancel')" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,requested,approved,done" />
+
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_256'}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <div class="d-flex">
+                                <field name="name" class="me-3" readonly="1"/>
+                            </div>
+                        </h1>
+                    </div>
+                    <separator/>
+                    <group colspan="3" class="o_row">
+                            <group>
+                            
+                            </group>
+                            <group>
+                                <field name="date" readonly="state not in ('draft')"/>
+                            </group>
+                            <group>
+                                
+                            </group>
+                    </group>
+                    
+                    <group colspan="3" class="o_row">
+                            <group>
+                                <field name="plan_no"/>
+                                <field name="rough_weight"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="approved_user_id"/>
+                                <field name="create_date"/>
+                            </group>
+                            <group>
+                                <field name="rap_id"  />
+                                <field name="less_discount_id"/>
+                            </group>
+                    </group>
+                    <separator/>
+                    <group colspan="3" class="o_row">
+                        <group>
+                            <field name="plan" invisible="1"/>
+                        </group>
+                        <group colspan="2">
+                            <button name="open_pricing_wizard" string="Add Plans" type="object" class="btn-primary" invisible="hide_button == True"/>
+                            <field name="hide_button" invisible="1"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>    
+                   
+                    <notebook>
+                        <page string="Plans">
+                            <field name="is_plan_1_highest" invisible="1"/>
+                            <field name="is_plan_2_highest" invisible="1"/>
+                            <field name="is_plan_3_highest" invisible="1"/>
+                            <field name="is_plan_4_highest" invisible="1"/>
+                            <field name="is_plan_5_highest" invisible="1"/>
+                            <field name="is_plan_6_highest" invisible="1"/>
+                            <field name="is_plan_7_highest" invisible="1"/>
+                            <field name="is_plan_8_highest" invisible="1"/>
+                            <field name="is_plan_9_highest" invisible="1"/>
+                            <field name="is_plan_10_highest" invisible="1"/>
+                            <!-- Plan 1 -->
+                            <div invisible="not line_items_1 or is_plan_1_highest != True">
+                                <h2>Plan 1</h2>
+                                <button name="action_approve_items_1" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <br/><br/>
+                                <group>
+                                    <field name="line_items_1" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_1" string="Plan Total"/>
+                                        <field name="plan_total_amount_1" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!-- Plan 2 -->
+                            <div invisible="not line_items_2 or is_plan_2_highest != True">
+                                <h2>Plan 2</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_2" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_2" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_2" string="Plan Total"/>
+                                        <field name="plan_total_amount_2" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!-- Plans 3 -->
+                            <div invisible="not line_items_3 or is_plan_3_highest != True">
+                                <h2>Plan 3</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_3" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_3" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_3" string="Plan Total"/>
+                                        <field name="plan_total_amount_3" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!-- Plans 4-->
+                            <div invisible="not line_items_4 or is_plan_4_highest != True">
+                                <h2>Plan 4</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_4" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_4" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_4" string="Plan Total"/>
+                                        <field name="plan_total_amount_4" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 5 -->
+                            <div invisible="not line_items_5 or is_plan_5_highest != True">
+                                 <h2>Plan 5</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_5" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_5"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_5" string="Plan Total"/>
+                                        <field name="plan_total_amount_5" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 6 -->
+                            <div invisible="not line_items_6 or is_plan_6_highest != True">
+                                 <h2>Plan 6</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_6" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_6"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_6" string="Plan Total"/>
+                                        <field name="plan_total_amount_6" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 7 -->
+                            <div invisible="not line_items_7 or is_plan_7_highest != True">
+                                 <h2>Plan 7</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_7" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_7"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_7" string="Plan Total"/>
+                                        <field name="plan_total_amount_7" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 8 -->
+                            <div invisible="not line_items_8 or is_plan_8_highest != True">
+                                 <h2>Plan 8</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_8" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_8"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_8" string="Plan Total"/>
+                                        <field name="plan_total_amount_8" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 9 -->
+                            <div invisible="not line_items_9 or is_plan_9_highest != True">
+                                 <h2>Plan 9</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_9" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_9"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_9" string="Plan Total"/>
+                                        <field name="plan_total_amount_9" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 10 -->
+                            <div invisible="not line_items_10 or is_plan_10_highest != True">
+                                 <h2>Plan 10</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_10" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_10"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_10" string="Plan Total"/>
+                                        <field name="plan_total_amount_10" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+
+
+                            <!-- Plan 1 -->
+                            <div invisible="not line_items_1 or is_plan_1_highest == True">
+                                <h2>Plan 1</h2>
+                                <button name="action_approve_items_1" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <br/><br/>
+                                <group>
+                                    <field name="line_items_1" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_1" string="Plan Total"/>
+                                        <field name="plan_total_amount_1" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+
+                            <!-- Plan 2 -->
+                            <div invisible="not line_items_2 or is_plan_2_highest == True">
+                                <h2>Plan 2</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_2" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_2" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_2" string="Plan Total"/>
+                                        <field name="plan_total_amount_2" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+
+                            <!-- Plans 3 -->
+                            <div invisible="not line_items_3 or is_plan_3_highest == True">
+                                <h2>Plan 3</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_3" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_3" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                              decoration-info="approval_status == 'draft'"
+                                              decoration-success="approval_status == 'approved'"
+                                              decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_3" string="Plan Total"/>
+                                        <field name="plan_total_amount_3" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!-- Plans 4-->
+                            <div invisible="not line_items_4 or is_plan_4_highest == True">
+                                <h2>Plan 4</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_4" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_4" nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_4" string="Plan Total"/>
+                                        <field name="plan_total_amount_4" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 5 -->
+                            <div invisible="not line_items_5 or is_plan_5_highest == True">
+                                 <h2>Plan 5</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_5" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_5"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_5" string="Plan Total"/>
+                                        <field name="plan_total_amount_5" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 6 -->
+                            <div invisible="not line_items_6 or is_plan_6_highest == True">
+                                 <h2>Plan 6</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_6" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_6"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_6" string="Plan Total"/>
+                                        <field name="plan_total_amount_6" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 7 -->
+                            <div invisible="not line_items_7 or is_plan_7_highest == True">
+                                 <h2>Plan 7</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_7" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_7"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_7" string="Plan Total"/>
+                                        <field name="plan_total_amount_7" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 8 -->
+                            <div invisible="not line_items_8 or is_plan_8_highest == True">
+                                 <h2>Plan 8</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_8" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_8"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_8" string="Plan Total"/>
+                                        <field name="plan_total_amount_8" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 9 -->
+                            <div invisible="not line_items_9 or is_plan_9_highest == True">
+                                 <h2>Plan 9</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_9" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_9"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_9" string="Plan Total"/>
+                                        <field name="plan_total_amount_9" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+                            <!--Plans 10 -->
+                            <div invisible="not line_items_10 or is_plan_10_highest == True">
+                                 <h2>Plan 10</h2>
+                                <br/>
+                                <br/>
+                                <button name="action_approve_items_10" string="Approve" type="object" class="btn-primary" invisible="hide_button == True or state not in ('requested')"/>
+                                <group>
+                                    <field name="line_items_10"  nolabel="1" readonly="hide_button == True">
+                                        <list editable="bottom" create="false"
+                                                  decoration-info="approval_status == 'draft'"
+                                                  decoration-success="approval_status == 'approved'"
+                                                  decoration-danger="approval_status == 'rejected'">
+                                            <field name="approval_status" column_invisible="True"/>
+                                            <field name="combination" width="100%"/>
+                                            <field name="size_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shape_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="colour_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="clarity_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="cut_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="polish_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="symmetry_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="florescence_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="shade_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="luster_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="heart_arrow_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="diamond_type_id" width="100%" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                                            <field name="remarks" width="100%"/>
+                                            <field name="avg_rap_back" width="100%" column_invisible="1"/>
+                                            <field name="final_rap_back" width="100%"/>
+                                            <field name="rap_price" width="100%"/>
+                                            <field name="price_per_carat" width="100%"/>
+                                            <field name="total_price" width="100%"/>
+                                        </list>
+                                    </field>
+                                    <group class="oe_subtotal_footer">
+                                        <label for="plan_total_amount_10" string="Plan Total"/>
+                                        <field name="plan_total_amount_10" nolabel="1" readonly="1"/>
+                                    </group>
+                                </group>
+                            </div>
+
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban view for pricing.engine -->
+    <record id="view_pricing_engine_kanban" model="ir.ui.view">
+        <field name="name">pricing.engine.kanban</field>
+        <field name="model">pricing.engine</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name" />
+                <field name="date" />
+                <field name="user_id" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                            <div>
+                                <field name="date" />
+                            </div>
+                            <div>
+                                <field name="user_id" />
+                            </div>
+                            <div>
+                                <field name="state" />
+                            </div>
+                        </div>
+                    </t>
+                </templates>    
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_pricing_engine" model="ir.actions.act_window">
+        <field name="name">Diamond Pricing Engine</field>
+        <field name="res_model">pricing.engine</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <menuitem id="menu_plm_pricing_engine"
+        name="Diamond Pricing Engine"
+        parent="mrp_plm.menu_mrp_plm_root"
+        sequence="11" />
+
+    <menuitem id="menu_pricing_engine" name="Pricing Engine" parent="xg_simgems_plm.menu_plm_pricing_engine"
+        action="action_pricing_engine"/>
+</odoo> 

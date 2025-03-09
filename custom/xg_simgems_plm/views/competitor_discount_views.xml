@@ -1,0 +1,126 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+
+
+    <!-- list view for discount.competitor -->
+    <record id="view_competitor_discount_list" model="ir.ui.view">
+        <field name="name">competitor.discount.list</field>
+        <field name="model">competitor.discount</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="date" />
+                <field name="responsible_user_id" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for competitor.discount -->
+    <record id="view_competitor_discount_form" model="ir.ui.view">
+        <field name="name">competitor.discount.form</field>
+        <field name="model">competitor.discount</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_inprogress" type="object" string="In Progress" invisible="state not in ('draft')" class="btn-primary"/>
+                     <button name="action_approve" type="object" string="Approve" invisible="state not in ('inprogress')" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Cancel"  invisible="state not in ('draft','cancel')" class="btn-danger"/>
+                    <!-- <button name="action_reset_to_draft" type="object" string="Reset To draft"  invisible="state not in ('approved','cancel')" class="btn-primary"/> -->
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,inprogress,approved" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="right_ind_disc">
+                            <field name="date" readonly="state not in ('draft')"/>
+                            <field name="approved_user_id" readonly="state not in ('draft','inprogress')"/>
+                            <field name="approved_date" />
+
+                        </group>
+                        <group name="left_ind_disc">
+                            <field name="responsible_user_id" readonly="state not in ('draft')"/>
+                            <field name="tags" widget="many2many_tags" readonly="state not in ('draft')"/>
+                            <field name="competitor_id" readonly="state not in ('draft')" required="1"/>
+                            <field name="weightage_id" readonly="state not in ('draft')" required="1"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                        
+                    </group>
+                    <notebook>
+                        <page string="Line Items">
+                            <field name="line_items" readonly="state not in ('draft')">
+                                <list editable="bottom">
+                                    <field name="size_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'size')]"/>
+                                    <field name="shape_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'shape')]"/>
+                                    <field name="colour_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'color')]"/>
+                                    <field name="clarity_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'clarity')]"/>
+                                    <field name="cut_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'cut')]"/>
+                                    <field name="polish_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'polish')]"/>
+                                    <field name="symmetry_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'sym')]"/>
+                                    <field name="florescence_id" width="200%" domain="[('attribute_id.y_attribute_type', '=', 'florescence')]"/>
+                                    <field name="price_per_carat" width="200%"/>
+                                    <field name="final_price" width="200%"/>
+                                    <field name="state" column_invisible="1"/>
+                                    <field name="approved_date" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban view for competitor.discount -->
+    <record id="view_competitor_discount_kanban" model="ir.ui.view">
+        <field name="name">competitor.discount.kanban</field>
+        <field name="model">competitor.discount</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name" />
+                <field name="date" />
+                <field name="responsible_user_id" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                            <div>
+                                <field name="date" />
+                            </div>
+                            <div>
+                                <field name="responsible_user_id" />
+                            </div>
+                            <div>
+                                <field name="state" />
+                            </div>
+                        </div>
+                    </t>
+                </templates>    
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_competitor_discount" model="ir.actions.act_window">
+        <field name="name">Competitor Discount</field>
+        <field name="res_model">competitor.discount</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    
+    
+    <menuitem id="menu_competitor_discount" name="Competitor Discount" parent="menu_plm_discounts"
+        action="action_competitor_discount" />
+</odoo>

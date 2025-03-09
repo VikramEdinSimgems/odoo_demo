@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+
+
+    <record id="view_inventory_pricing_tree" model="ir.ui.view">
+        <field name="name">inventory.pricing.list</field>
+        <field name="model">inventory.pricing</field>
+        <field name="arch" type="xml">
+            <list string="Inventory Pricing">
+
+                <field name="name"/>
+                <field name="polish_code"/>
+                <field name="certificate_no"/>
+                <field name="cert_link" widget="url"/>
+                <field name="size_id" column_invisible="True"/>
+                <field name="size"/>
+                <field name="shape_id" column_invisible="True"/>
+                <field name="shape_name"/>
+                <field name="colour"/>
+                <field name="clarity_id"/>
+                <field name="cut_id"/>
+                <field name="polish_id"/>
+                <field name="symmetry_id"/>
+                <field name="florescence_id"/>
+                <field name="image_id" widget="url"/>
+                <field name="video_id" widget="url"/>
+                <field name="country"/>
+                <field name="bt_id"/>
+                <field name="bc_id"/>
+                <field name="wt_id"/>
+                <field name="wc_id"/>
+                <field name="shade_id"/>
+                <field name="heart_id"/>
+                <field name="ec_id"/>
+                <field name="luster_id"/>
+                <field name="lab_id"/>
+                <field name="diamond_type_id"/>
+                <field name="stone_status"/>
+                <field name="cert_comments"/>
+                <field name="key_to_symbols"/>
+                <field name="ratio"/>
+                <field name="measurement"/>
+                <field name="table_perc"/>
+                <field name="depth_perc"/>
+                <field name="crown_angle"/>
+                <field name="pavilion_angle"/>
+                <field name="pavilion_depth"/>
+                <field name="rap_price1"/>
+                <field name="price_per_carat1"/>
+                <field name="final_rap_back1"/>
+<!--                <field name="rap_price"/>-->
+<!--                <field name="final_rap_back"/>-->
+<!--                <field name="price_per_carat"/>-->
+<!--                <field name="total_price"/>-->
+
+            </list>
+        </field>
+    </record>
+
+    <record id="view_inventory_pricing_form" model="ir.ui.view">
+        <field name="name">inventory.pricing.form</field>
+        <field name="model">inventory.pricing</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Pricing">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="polish_code"/>
+                            <field name="certificate_no"/>
+                            <field name="cert_link" widget="url"/>
+                            <field name="shape_name"/>
+                            <field name="size"/>
+                            <field name="size_id" domain="[('attribute_id.y_attribute_type', '=', 'size'),('attribute_id.y_status', '=', 'active')]" invisible="1"/>
+                            <field name="colour"/>
+                            <field name="shape_id" domain="[('attribute_id.y_attribute_type', '=', 'shape'),('attribute_id.y_status', '=', 'active')]" invisible="1"/>
+<!--                            <field name="colour_id" domain="[('attribute_id.y_attribute_type', '=', 'color'),('attribute_id.y_status', '=', 'active')]"/>-->
+                            <field name="clarity_id" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="cut_id" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="polish_id" domain="[('attribute_id.y_attribute_type', '=', 'polish'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="symmetry_id" domain="[('attribute_id.y_attribute_type', '=', 'sym'),('attribute_id.y_status', '=', 'active')]"/>
+
+                        </group>
+                        <group>
+                            <field name="florescence_id" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="country"/>
+                            <field name="bt_id" domain="[('attribute_id.y_attribute_type', '=', 'bt'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="bc_id" domain="[('attribute_id.y_attribute_type', '=', 'bc'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="wt_id" domain="[('attribute_id.y_attribute_type', '=', 'wt'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="wc_id" domain="[('attribute_id.y_attribute_type', '=', 'wc'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="shade_id" domain="[('attribute_id.y_attribute_type', '=', 'shade'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="heart_id" domain="[('attribute_id.y_attribute_type', '=', 'ha'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="ec_id" domain="[('attribute_id.y_attribute_type', '=', 'ec'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="luster_id" domain="[('attribute_id.y_attribute_type', '=', 'ls'),('attribute_id.y_status', '=', 'active')]"/>
+                        </group>
+                        <group>
+                            <field name="lab_id" domain="[('attribute_id.y_attribute_type', '=', 'lab'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="diamond_type_id" domain="[('attribute_id.y_attribute_type', '=', 'dt'),('attribute_id.y_status', '=', 'active')]"/>
+                             <field name="stone_status"/>
+                        </group>
+
+                    </group>
+                    <group>
+                            <field name="cert_comments"/>
+                            <field name="key_to_symbols"/>
+                        </group>
+                        <group>
+                            <field name="image_id" widget="url"/>
+                            <field name="video_id" widget="url"/>
+                            <field name="ratio"/>
+                            <field name="measurement"/>
+                            <field name="table_perc"/>
+                            <field name="depth_perc"/>
+                            <field name="crown_angle"/>
+                            <field name="pavilion_angle"/>
+                            <field name="pavilion_depth"/>
+                            <field name="rap_price1"/>
+                            <field name="price_per_carat1"/>
+                             <field name="final_rap_back1"/>
+                        </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_inventory_pricing_search" model="ir.ui.view">
+        <field name="name">inventory.pricing.search</field>
+        <field name="model">inventory.pricing</field>
+        <field name="arch" type="xml">
+            <search string="Inventory Pricing Search">
+                <field name="polish_code"/>
+                <field name="certificate_no"/>
+                <field name="size_id"/>
+                <field name="shape_id"/>
+                <field name="colour_id"/>
+                <field name="clarity_id"/>
+                <field name="cut_id"/>
+                <field name="polish_id"/>
+                <field name="symmetry_id"/>
+                <field name="florescence_id"/>
+                <field name="lab_id"/>
+                <field name="diamond_type_id"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

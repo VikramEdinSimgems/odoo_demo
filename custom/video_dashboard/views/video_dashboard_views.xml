@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+
+
+    <record id="view_video_dashboard_tree" model="ir.ui.view">
+        <field name="name">video.dashboard.list</field>
+        <field name="model">video.dashboard</field>
+        <field name="arch" type="xml">
+            <list string="Video Dashboard">
+
+                <field name="name"/>
+                <field name="polish_codes"/>
+                <field name="certificate_no"/>
+                <field name="cert_link" widget="url"/>
+                <field name="size"/>
+                <field name="shape_name"/>
+                <field name="colour"/>
+                <field name="clarity_id"/>
+                <field name="cut_id"/>
+                <field name="florescence_id"/>
+                <field name="image_id" widget="image"/>
+                <field name="video_id" filename="video_id_filename" widget="binary"/>
+                <field name="tweezer_video" filename="tweezer_video_filename" widget="binary"/>
+                <field name="on_hand_video" filename="on_hand_video_filename" widget="binary"/>
+                <field name="front_and_back_video" filename="front_and_back_video_filename" widget="binary"/>
+                <field name="on_box_video" filename="on_box_video_filename" widget="binary"/>
+                <field name="shadecard_video" filename="shadecard_video_filename" widget="binary"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_video_dashboard_form" model="ir.ui.view">
+        <field name="name">video.dashboard.form</field>
+        <field name="model">video.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Video Dashboard">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="inventory_pricing_id" on_change="1"/>
+                            <field name="polish_codes"/>
+                            <field name="certificate_no"/>
+                            <field name="cert_link" widget="url"/>
+                            <field name="shape_name"/>
+                            <field name="size"/>
+                            <field name="colour"/>
+                            <field name="clarity_id" domain="[('attribute_id.y_attribute_type', '=', 'clarity'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="cut_id" domain="[('attribute_id.y_attribute_type', '=', 'cut'),('attribute_id.y_status', '=', 'active')]"/>
+                            <field name="florescence_id" domain="[('attribute_id.y_attribute_type', '=', 'florescence'),('attribute_id.y_status', '=', 'active')]"/>
+                        </group>
+                        <group>
+                            <field name="image_id" widget="image"/>
+                            <field name="video_id" filename="video_id_filename" widget="binary"/>
+                            <field name="tweezer_video" filename="tweezer_video_filename" widget="binary"/>
+                            <field name="on_hand_video" filename="on_hand_video_filename" widget="binary"/>
+                            <field name="front_and_back_video" filename="front_and_back_video_filename" widget="binary"/>
+                            <field name="on_box_video" filename="on_box_video_filename" widget="binary"/>
+                            <field name="shadecard_video" filename="shadecard_video_filename" widget="binary"/>
+                        </group>
+                    </group>
+
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_video_dashboard_search" model="ir.ui.view">
+        <field name="name">video.dashboard.search</field>
+        <field name="model">video.dashboard</field>
+        <field name="arch" type="xml">
+            <search string="Video Dashboard Search">
+                <field name="name"/>
+                <field name="polish_codes"/>
+                <field name="certificate_no"/>
+                <field name="cert_link" widget="url"/>
+                <field name="size"/>
+                <field name="shape_name"/>
+                <field name="colour"/>
+                <field name="clarity_id"/>
+                <field name="cut_id"/>
+                <field name="florescence_id"/>
+                <field name="image_id" widget="image"/>
+                <field name="video_id" filename="video_id_filename" widget="binary"/>
+                <field name="tweezer_video" filename="tweezer_video_filename" widget="binary"/>
+                <field name="on_hand_video" filename="on_hand_video_filename" widget="binary"/>
+                <field name="front_and_back_video" filename="front_and_back_video_filename" widget="binary"/>
+                <field name="on_box_video" filename="on_box_video_filename" widget="binary"/>
+                <field name="shadecard_video" filename="shadecard_video_filename" widget="binary"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+

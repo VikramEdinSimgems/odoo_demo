@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="frontdesk.WelcomePage" t-inherit-mode="extension">
+        <!-- Insert Image Before the Welcome Message -->
+        <xpath expr="//div[contains(@class, 'display-2')]" position="before">
+            <div class="text-center mb-3">
+                <img src="/frontdesk_custom/static/src/img/welcome_image.png"
+                     class="img-fluid"
+                     alt="Welcome Image"
+                     style="max-width: 200px;"/>
+            </div>
+        </xpath>
+
+        <!-- Modify the Welcome Message -->
+        <xpath expr="//div[contains(@class, 'display-2')]/div[@class='fs-1 fw-light']" position="replace">
+            <div class="fs-1 fw-light">to SimStar</div>
+        </xpath>
+
+        <!-- Hide an Element -->
+        <xpath expr="//div[contains(@class, 'justify-content-lg-end')]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+    </t>
+</templates>
+
+
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="plm_icon_13" model="ir.attachment">
+            <field name="name">Others.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/Others.svg</field>
+        </record>
+        <record id="plm_icon_12" model="ir.attachment">
+            <field name="name">asscher.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/asscher.svg</field>
+        </record>
+        <record id="plm_icon_11" model="ir.attachment">
+            <field name="name">marquise.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/marquise.svg</field>
+        </record>
+        <record id="plm_icon_10" model="ir.attachment">
+            <field name="name">sq_emerald.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/sq_emerald.svg</field>
+        </record>
+        <record id="plm_icon_09" model="ir.attachment">
+            <field name="name">heart.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/heart.svg</field>
+        </record>
+        <record id="plm_icon_08" model="ir.attachment">
+            <field name="name">princess.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/princess.svg</field>
+        </record>
+        <record id="plm_icon_07" model="ir.attachment">
+            <field name="name">Cu_brilliant.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/Cu_brilliant.svg</field>
+        </record>
+        <record id="plm_icon_06" model="ir.attachment">
+            <field name="name">Cu_modified.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/Cu_modified.svg</field>
+        </record>
+        <record id="plm_icon_05" model="ir.attachment">
+            <field name="name">oval.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/oval.svg</field>
+        </record>
+        <record id="plm_icon_04" model="ir.attachment">
+            <field name="name">radiant.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/radiant.svg</field>
+        </record>
+        <record id="plm_icon_03" model="ir.attachment">
+            <field name="name">emerald.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/Emerald.svg</field>
+        </record>
+        <record id="plm_icon_02" model="ir.attachment">
+            <field name="name">pear.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/pear.svg</field>
+        </record>
+        <record id="plm_icon_01" model="ir.attachment">
+            <field name="name">round.svg</field>
+            <field name="res_model">pricing.engine</field>
+            <field name="res_field">icon_id</field>
+            <field name="public" eval="True"/>
+            <field name="type">url</field>
+            <field name="url">/xg_simgems_plm/static/src/img/icons/round.svg</field>
+        </record>
+
+    </data>
+</odoo>

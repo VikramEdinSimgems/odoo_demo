@@ -1,0 +1,39 @@
+<!-- plm/views/discount_indirect_views.xml -->
+<odoo>
+
+    <record id="view_product_attribute_form_inherit" model="ir.ui.view">
+        <field name="name">product.attribute.form.inherit</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add the field in the General Information section -->
+            <xpath expr="//form/sheet/group/group[@name='sale_main_fields']" position="after">
+                <group name="y_attribute_type" col="3">
+                    <field name="y_status" readonly="1"/>
+                    <field name="y_attribute_type" widget="selection" readonly="y_status == 'active'"/>
+                </group>
+                
+            </xpath>
+
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_active" type="object" string="Active" class="btn-primary" invisible="y_status == 'active'"/>
+                </header>
+            </xpath>
+
+            <xpath expr="//form/sheet/group/group[@name='sale_main_fields']" position="before">
+                <widget name="web_ribbon" title="Active" bg_color="text-bg-success" invisible="y_status == 'inactive'"/>
+            </xpath>
+
+            <field name="sequence" position="after">
+                <field name="y_sequence_no" attrs="{'required': [('y_sequence_no', '=', 0)]}"/>
+            </field>
+
+            <xpath expr="//form/sheet/notebook/page/field[@name='value_ids']/list/field[@name='name']" position="before">
+                <field name="y_short_code"/>
+            </xpath> 
+            
+        </field>
+    </record>
+
+</odoo>

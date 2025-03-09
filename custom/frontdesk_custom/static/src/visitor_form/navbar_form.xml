@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="frontdesk.Navbar" t-inherit-mode="extension">
+        <!--        <xpath expr="//div[contains(@class, 'align-self-end mt-3 mt-sm-0 w-100 w-sm-25')]" position="attributes">-->
+<!--             <attribute name="style">display: none !important;</attribute>-->
+<!--        </xpath>-->
+        <xpath expr="//h1" position="replace">
+            <h1 class="flex-fill mb-0 mt-4 fw-light text-center">
+        <span t-if="props.currentComponent === 'VisitorForm'">Please enter your details.</span>
+                <span t-if="props.currentComponent === 'HostPage'">Please enter your details.</span>
+            </h1>
+        </xpath>
+        <xpath expr="//div[contains(@class, 'me-auto me-sm-0 w-50 px-3 text-center')]" position="replace">
+            <div class="me-auto me-sm-0 w-50 px-3 text-center o_frontdesk">
+                <img t-attf-src="/web/image/res.company/{{ props.companyInfo.id }}/logo"
+                     alt="Company Logo"
+                     class="img-fluid o_company_logo"/>
+            </div>
+        </xpath>
+
+    </t>
+        </templates>

@@ -1,0 +1,81 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_discount_indirect" model="ir.sequence">
+            <field name="name">Discount Indirect Sequence</field>
+            <field name="code">discount.indirect</field>
+            <field name="prefix">Ind-Disc/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_discount_direct" model="ir.sequence">
+            <field name="name">Discount Direct Sequence</field>
+            <field name="code">discount.direct</field>
+            <field name="prefix">Dir-Disc/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_internal_discount" model="ir.sequence">
+            <field name="name">Discount Direct Sequence</field>
+            <field name="code">internal.discount</field>
+            <field name="prefix">Int-Disc/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_base_discount" model="ir.sequence">
+            <field name="name">Base Discount Sequence</field>
+            <field name="code">base.discount</field>
+            <field name="prefix">Base-Disc/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_discount_capping" model="ir.sequence">
+            <field name="name">Discount Capping</field>
+            <field name="code">discount.capping</field>
+            <field name="prefix">Disc-Cap/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_competitor_discount" model="ir.sequence">
+            <field name="name">Competitor Discount</field>
+            <field name="code">competitor.discount</field>
+            <field name="prefix">Disc-Comp/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_rapprice_threshold" model="ir.sequence">
+            <field name="name">Rapprice Threshold</field>
+            <field name="code">rapprice.threshold</field>
+            <field name="prefix">Rap-Comp/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_rap_price" model="ir.sequence">
+            <field name="name">Rap Price</field>
+            <field name="code">rap.price</field>
+            <field name="prefix">Rap/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_less_discount_base" model="ir.sequence">
+            <field name="name">Less Discount Base</field>
+            <field name="code">less.discount</field>
+            <field name="prefix">LDB/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_pricing_engine" model="ir.sequence">
+            <field name="name">Pricing Engine</field>
+            <field name="code">pricing.engine</field>
+            <field name="prefix">PE/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_discount_discount" model="ir.sequence">
+            <field name="name">Discount Master</field>
+            <field name="code">discount.discount</field>
+            <field name="prefix">Disc/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>
